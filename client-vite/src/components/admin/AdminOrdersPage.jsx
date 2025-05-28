@@ -32,7 +32,7 @@ const AdminOrdersPage = () => {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const usersRes = await axios.get('/api/users?role=customer');
+      const usersRes = await axios.get('/api/users');
       const productsRes = await axios.get('/api/products');
       const ordersRes = await axios.get('/api/orders/all');
       setUsers(usersRes.data);
