@@ -77,7 +77,6 @@ app.use('/api/orders', orderRoutes);
 
 // Обслуговування статичних файлів
 app.use(express.static(path.join(__dirname, 'client-vite/dist')));
-app.use('/favicon.ico', express.static(path.join(__dirname, 'client-vite/dist/favicon.ico')));
 
 // Віддача SPA для всіх інших маршрутів
 app.get('*', (req, res) => {
