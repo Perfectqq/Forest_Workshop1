@@ -75,6 +75,11 @@ app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 
+// Редирект на фронтенд
+app.get('/', (req, res) => {
+  res.redirect(process.env.FRONTEND_URL || 'http://localhost:5173');
+});
+
 // Обслуговування статичних файлів
 app.use(express.static(path.join(__dirname, 'client-vite/dist')));
 
