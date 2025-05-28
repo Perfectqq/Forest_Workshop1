@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../../api/config';
 import './AdminProductList.scss';
 
 const AdminProductList = () => {
@@ -28,9 +28,7 @@ const AdminProductList = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await axios.get('/api/products', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get('/api/products');
       setProducts(res.data || []);
     } catch (error) {
       console.error('Помилка при завантаженні товарів:', error);
@@ -112,9 +110,7 @@ const AdminProductList = () => {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`/api/products/${editProductId}`, editedProduct, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.put(`/api/products/${editProductId}`, editedProduct);
       await fetchProducts();
       handleCancelEdit();
     } catch (error) {
@@ -126,9 +122,7 @@ const AdminProductList = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Ви впевнені, що хочете видалити цей товар?')) return;
     try {
-      await axios.delete(`/api/products/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.delete(`/api/products/${id}`);
       await fetchProducts();
       if (currentProducts.length === 1 && currentPage > 1) {
         setCurrentPage(prev => prev - 1);
@@ -149,9 +143,7 @@ const AdminProductList = () => {
 
   const handleAddProduct = async () => {
     try {
-      await axios.post('/api/products', newProduct, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.post('/api/products', newProduct);
       await fetchProducts();
       setShowAddModal(false);
       setNewProduct({
