@@ -8,7 +8,7 @@ import AdminProductList from './components/admin/AdminProductList';
 import AdminUserPage from './components/admin/AdminUserPage';
 import AdminOrdersPage from './components/admin/AdminOrdersPage';
 import HomePage from './components/HomePage';
-import axios from './config/axios';
+import api from './api/config';
 import './App.scss';
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
       
       if (token && role) {
         try {
-          await axios.get('/api/users/verify-token');
+          await api.get('/api/users/verify-token');
           setUserRole(role);
         } catch (err) {
           localStorage.removeItem('token');

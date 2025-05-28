@@ -1,8 +1,7 @@
 // src/components/ProductList.jsx - список товарів для покупця
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/config';
 import { useNavigate } from 'react-router-dom';
-import { API_BASE_URL } from '../config';
 import OrderModal from './OrderModal';
 import CartPanel from './CartPanel';
 import { FaShoppingCart } from 'react-icons/fa';
@@ -25,7 +24,7 @@ function ProductList() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${API_BASE_URL}/api/products`);
+      const response = await api.get('/api/products');
       setProducts(response.data);
     } catch (err) {
       setError('Не вдалося завантажити товари');

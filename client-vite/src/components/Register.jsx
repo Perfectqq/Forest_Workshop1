@@ -1,8 +1,7 @@
 // src/components/Register.jsx - сторінка реєстрації
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api/config';
 import { useNavigate, Link } from 'react-router-dom';
-import { API_BASE_URL } from '../config';
 import './AuthForms.scss';
 
 function Register() {
@@ -20,7 +19,7 @@ function Register() {
     setIsLoading(true);
     
     try {
-      await axios.post(`${API_BASE_URL}/api/users/register`, { name, email, password });
+      await api.post('/api/users/register', { name, email, password });
       alert('Реєстрація успішна! Тепер ви можете увійти.');
       navigate('/login');
     } catch (err) {

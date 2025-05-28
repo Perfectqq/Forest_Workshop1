@@ -1,8 +1,7 @@
 // src/components/Login.jsx - сторінка входу
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api/config';
 import { useNavigate, Link } from 'react-router-dom';
-import { API_BASE_URL } from '../config';
 import './AuthForms.scss';
 
 function Login({ setUserRole }) {
@@ -19,7 +18,7 @@ function Login({ setUserRole }) {
     setIsLoading(true);
     
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/users/login`, { email, password });
+      const response = await api.post('/api/users/login', { email, password });
       const { token, role } = response.data;
       // Зберігаємо токен і роль користувача
       localStorage.setItem('token', token);

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { API_BASE_URL } from '../config';
+import api from '../api/config';
 import './OrderModal.scss';
 
 function OrderModal({ isOpen, onClose, cart }) {
@@ -45,22 +44,14 @@ function OrderModal({ isOpen, onClose, cart }) {
     setIsLoading(true);
 
     try {
-      const token = localStorage.getItem('token');
-      // Формуємо масив items для бекенду
       const items = cart.map(item => ({
         product: item.product._id,
         quantity: item.quantity
       }));
-      await axios.post(
-        `${API_BASE_URL}/api/orders`,
-        {
-          items,
-          ...formData
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` }
-        }
-      );
+      await api.post('/api/orders', {
+        items,
+        ...formData
+      });
       alert('Замовлення успішно оформлено!');
       onClose();
     } catch (err) {
