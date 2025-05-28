@@ -70,19 +70,19 @@ mongoose.connection.on('reconnected', () => {
   console.log('🔄 Повторне підключення до MongoDB');
 });
 
-// Маршрути
+// API маршрути
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 
-// Обслуговування статичних файлів фронтенду
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client-vite/dist')));
-  
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client-vite/dist', 'index.html'));
-  });
-}
+// Обслуговування статичних файлів
+app.use(express.static(path.join(__dirname, 'client-vite/dist')));
+app.use('/favicon.ico', express.static(path.join(__dirname, 'client-vite/dist/favicon.ico')));
+
+// Віддача SPA для всіх інших маршрутів
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client-vite/dist/index.html'));
+});
 
 // Обробка помилок
 app.use((err, req, res, next) => {
