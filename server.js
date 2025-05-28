@@ -77,7 +77,7 @@ app.use('/api/orders', orderRoutes);
 
 // Редирект на фронтенд
 app.get('/', (req, res) => {
-  res.redirect(process.env.FRONTEND_URL || 'http://localhost:5173');
+  res.redirect(process.env.FRONTEND_URL || 'https://forest-workshop1-git-master-perfectqqs-projects.vercel.app');
 });
 
 // Обслуговування статичних файлів
