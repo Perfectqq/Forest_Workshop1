@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "cd client-vite && npm install --force && ./node_modules/.bin/vite build",
+    "build": "cd client-vite && npm install --force && npx --yes vite@4.5.2 build",
     "build:prod": "npm run build && npm start"
   },
   "keywords": [],
