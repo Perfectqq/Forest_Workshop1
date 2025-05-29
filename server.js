@@ -48,6 +48,14 @@ app.use((req, res, next) => {
   next();
 });
 
+// Логування для діагностики
+app.use((req, res, next) => {
+  console.log('Request path:', req.path);
+  console.log('Request method:', req.method);
+  console.log('Request headers:', req.headers);
+  next();
+});
+
 // Підключення до MongoDB
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -94,6 +102,9 @@ app.use(express.static(path.join(__dirname, 'client-vite/dist')));
 // Віддача SPA для всіх інших маршрутів
 app.get('*', (req, res) => {
   console.log('Catch-all route triggered for:', req.originalUrl);
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ message: 'API endpoint not found' });
+  }
   res.sendFile(path.join(__dirname, 'client-vite/dist/index.html'));
 });
 
