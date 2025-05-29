@@ -21,10 +21,9 @@ app.use(express.json());
 // CORS налаштування для продакшену
 const allowedOrigins = [
   'http://localhost:5173',
-  'http://localhost:5000',
   'https://forest-workshop1.vercel.app',
+  'https://forest-workshop1-f3rj527tg-perfectqqs-projects.vercel.app',
   'https://forest-workshop1-git-master-perfectqqs-projects.vercel.app',
-  'https://forest-workshop1-git-main-perfectqqs-projects.vercel.app',
   process.env.FRONTEND_URL
 ].filter(Boolean);
 
