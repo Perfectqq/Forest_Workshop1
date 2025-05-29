@@ -43,10 +43,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 console.log('📡 Спроба підключення до MongoDB Atlas...');
 console.log(`🔗 URI: ${MONGODB_URI.replace(/\/\/.*@/, '//<credentials>@')}`);
 
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect(MONGODB_URI)
 .then(() => {
   console.log('✅ Успішно підключено до MongoDB Atlas');
   console.log(`📊 База даних: ${mongoose.connection.name}`);
