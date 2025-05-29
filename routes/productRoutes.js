@@ -9,9 +9,7 @@ const adminAuth = require('../middleware/admin');
 // Отримати всі товари (для всіх користувачів)
 router.get('/', async (req, res) => {
   try {
-    console.log('GET /api/products called');
     const products = await Product.find();
-    console.log('Products found:', products.length);
     res.send(products);
   } catch (err) {
     console.error('Error in /api/products:', err);
