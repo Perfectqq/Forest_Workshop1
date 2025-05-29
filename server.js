@@ -35,6 +35,12 @@ app.use(cors({
 }));
 console.log('CORS middleware applied with origin: true');
 
+// Логування кожного запиту
+app.use((req, res, next) => {
+  console.log('Request:', req.method, req.originalUrl, 'Origin:', req.headers.origin);
+  next();
+});
+
 // Підключення до MongoDB
 const MONGODB_URI = process.env.MONGODB_URI;
 
