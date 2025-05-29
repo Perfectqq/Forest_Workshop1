@@ -153,4 +153,22 @@ router.get('/verify-token', auth, async (req, res) => {
   }
 });
 
+// Оновити роль користувача (тільки для адміністратора)
+router.patch('/:id/role', auth, adminAuth, async (req, res) => {
+  try {
+    const { role } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { role },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).send({ message: 'Користувача не знайдено' });
+    }
+    res.send({ message: 'Роль оновлено' });
+  } catch (err) {
+    res.status(500).send({ message: 'Серверна помилка' });
+  }
+});
+
 module.exports = router;
