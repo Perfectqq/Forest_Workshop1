@@ -21,7 +21,8 @@ app.use(express.json());
 // CORS налаштування для продакшену
 const allowedOrigins = [
   'http://localhost:5173',
-  process.env.FRONTEND_URL // Додайте URL вашого фронтенду в продакшені
+  'https://forest-workshop1-git-master-perfectqqs-projects.vercel.app',
+  process.env.FRONTEND_URL
 ].filter(Boolean);
 
 app.use(cors({
@@ -33,8 +34,8 @@ app.use(cors({
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
 // Підключення до MongoDB
@@ -74,7 +75,7 @@ app.use('/api/orders', orderRoutes);
 
 // Редирект на фронтенд
 app.get('/', (req, res) => {
-  res.redirect(process.env.FRONTEND_URL || 'https://forest-workshop1-git-master-perfectqqs-projects.vercel.app');
+  res.redirect(process.env.FRONTEND_URL || 'http://localhost:5000p');
 });
 
 // Обслуговування статичних файлів
