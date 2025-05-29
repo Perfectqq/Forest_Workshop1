@@ -27,7 +27,7 @@ const AdminUserPage = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const res = await api.get('/users');
+        const res = await api.get('/api/users');
         setUsers(res.data);
       } catch (err) {
         setError(err.response?.data?.message || err.message);
@@ -97,7 +97,7 @@ const AdminUserPage = () => {
 
   const handleUpdate = async () => {
     try {
-      await api.put(`/users/${editUserId}`, editedUser);
+      await api.put(`/api/users/${editUserId}`, editedUser);
       const updatedUsers = users.map(user => 
         user._id === editUserId ? { ...user, ...editedUser } : user
       );
@@ -112,7 +112,7 @@ const AdminUserPage = () => {
   // Додавання користувача
   const handleAddUser = async () => {
     try {
-      const res = await api.post('/users', newUser);
+      const res = await api.post('/api/users', newUser);
       setUsers([...users, res.data]);
       setShowAddModal(false);
       setNewUser({
@@ -132,7 +132,7 @@ const AdminUserPage = () => {
     if (!window.confirm('Ви впевнені, що хочете видалити цього користувача?')) return;
     
     try {
-      await api.delete(`/users/${userId}`);
+      await api.delete(`/api/users/${userId}`);
       setUsers(prevUsers => prevUsers.filter(user => user._id !== userId));
       alert('Користувача успішно видалено');
     } catch (err) {
@@ -145,7 +145,7 @@ const AdminUserPage = () => {
   // Оновлення ролі
   const handleRoleUpdate = async (userId, newRole) => {
     try {
-      await api.patch(`/users/${userId}/role`, { role: newRole });
+      await api.patch(`/api/users/${userId}/role`, { role: newRole });
       setUsers(users.map(user => 
         user._id === userId ? { ...user, role: newRole } : user
       ));
