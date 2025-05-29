@@ -86,6 +86,7 @@ app.use(express.static(path.join(__dirname, 'client-vite/dist')));
 
 // Віддача SPA для всіх інших маршрутів
 app.get('*', (req, res) => {
+  console.log('Catch-all route triggered for:', req.originalUrl);
   res.sendFile(path.join(__dirname, 'client-vite/dist/index.html'));
 });
 
