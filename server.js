@@ -33,6 +33,7 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
+console.log('CORS middleware applied with origin: true');
 
 // Підключення до MongoDB
 const MONGODB_URI = process.env.MONGODB_URI;
