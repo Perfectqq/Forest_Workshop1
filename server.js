@@ -21,18 +21,13 @@ app.use(express.json());
 // CORS налаштування для продакшену
 const allowedOrigins = [
   'http://localhost:5173',
+  'http://localhost:5000',
   'https://forest-workshop1-git-master-perfectqqs-projects.vercel.app',
   process.env.FRONTEND_URL
 ].filter(Boolean);
 
 app.use(cors({
-  origin: function(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: true, // Дозволяємо всі origins для тестування
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
@@ -75,7 +70,7 @@ app.use('/api/orders', orderRoutes);
 
 // Редирект на фронтенд
 app.get('/', (req, res) => {
-  res.redirect(process.env.FRONTEND_URL || 'http://localhost:5000p');
+  res.redirect(process.env.FRONTEND_URL || 'http://localhost:5000');
 });
 
 // Обслуговування статичних файлів
