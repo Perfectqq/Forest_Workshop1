@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../../config/axios';
+import api from '../../api/config';
 import './AdminOrdersPage.scss';
 
 const AdminOrdersPage = () => {
@@ -32,9 +32,9 @@ const AdminOrdersPage = () => {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const usersRes = await axios.get('/api/users');
-      const productsRes = await axios.get('/api/products');
-      const ordersRes = await axios.get('/api/orders/all');
+      const usersRes = await api.get('/users');
+      const productsRes = await api.get('/products');
+      const ordersRes = await api.get('/orders/all');
       setUsers(usersRes.data);
       setProducts(productsRes.data);
       setOrders(ordersRes.data.orders);
@@ -152,7 +152,7 @@ const AdminOrdersPage = () => {
         items: orderItems,
         status: editedOrder.status
       };
-      await axios.put(`/api/orders/${editOrderId}`, orderData);
+      await api.put(`/orders/${editOrderId}`, orderData);
       await fetchOrders();
       handleCancelEdit();
     } catch (err) {
@@ -183,7 +183,7 @@ const AdminOrdersPage = () => {
         status: newOrder.status
       };
 
-      await axios.post('/api/orders', orderData);
+      await api.post('/orders', orderData);
       await fetchOrders();
       setShowAddModal(false);
       setNewOrder({
@@ -207,7 +207,7 @@ const AdminOrdersPage = () => {
     if (!window.confirm('Ви впевнені, що хочете видалити це замовлення?')) return;
     
     try {
-      await axios.delete(`/api/orders/${orderId}`);
+      await api.delete(`/orders/${orderId}`);
       setOrders(prevOrders => prevOrders.filter(order => order._id !== orderId));
       alert('Замовлення успішно видалено');
     } catch (err) {
@@ -220,7 +220,7 @@ const AdminOrdersPage = () => {
   // Оновлення статусу
   const handleStatusUpdate = async (orderId, newStatus) => {
     try {
-      await axios.patch(`/api/orders/${orderId}/status`, { status: newStatus });
+      await api.patch(`/orders/${orderId}/status`, { status: newStatus });
       setOrders(orders.map(order => 
         order._id === orderId ? { ...order, status: newStatus } : order
       ));
