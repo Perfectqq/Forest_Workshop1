@@ -14,6 +14,10 @@ function ProductList() {
   const [cart, setCart] = useState([]); // масив товарів у кошику
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(6);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortOption, setSortOption] = useState('name-asc');
   const navigate = useNavigate();
 
   // Завантаження товарів при монтуванні компонента
@@ -32,6 +36,38 @@ function ProductList() {
       setLoading(false);
     }
   };
+
+  // Фільтрація товарів
+  const filteredProducts = products.filter(product => {
+    const search = searchTerm.toLowerCase();
+    return (
+      product.name.toLowerCase().includes(search) ||
+      product.materials.toLowerCase().includes(search) ||
+      product.sizes.toLowerCase().includes(search)
+    );
+  });
+
+  // Сортування товарів
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    switch (sortOption) {
+      case 'name-asc':
+        return a.name.localeCompare(b.name);
+      case 'name-desc':
+        return b.name.localeCompare(a.name);
+      case 'price-asc':
+        return a.price - b.price;
+      case 'price-desc':
+        return b.price - a.price;
+      default:
+        return 0;
+    }
+  });
+
+  // Пагінація
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const totalPages = Math.ceil(sortedProducts.length / productsPerPage);
 
   // Додає товар у кошик або збільшує кількість
   const handleAddToCart = (product) => {
@@ -98,6 +134,34 @@ function ProductList() {
         <p>Виберіть унікальний виріб ручної роботи для вашого дому</p>
       </div>
 
+      {/* Елементи управління */}
+      <div className="products-controls">
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Пошук за назвою, матеріалами або розмірами..."
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setCurrentPage(1);
+            }}
+          />
+        </div>
+
+        <div className="sort-options">
+          <label>Сортувати за:</label>
+          <select 
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+          >
+            <option value="name-asc">Назва (А-Я)</option>
+            <option value="name-desc">Назва (Я-А)</option>
+            <option value="price-asc">Ціна (зростаюча)</option>
+            <option value="price-desc">Ціна (спадаюча)</option>
+          </select>
+        </div>
+      </div>
+
       {/* Кнопка кошика */}
       <button className="cart-fab" onClick={() => setIsCartOpen(true)}>
         <FaShoppingCart size={22} />
@@ -105,7 +169,7 @@ function ProductList() {
       </button>
 
       <div className="products-grid">
-        {products.map((product) => (
+        {currentProducts.map((product) => (
           <div key={product._id} className="product-card">
             {product.photoUrl && (
               <img 
@@ -132,6 +196,27 @@ function ProductList() {
           </div>
         ))}
       </div>
+
+      {/* Пагінація */}
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button 
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            Попередня
+          </button>
+          <span className="page-info">
+            Сторінка {currentPage} з {totalPages}
+          </span>
+          <button 
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            Наступна
+          </button>
+        </div>
+      )}
 
       {/* Сучасний кошик (drawer) */}
       {isCartOpen && (
