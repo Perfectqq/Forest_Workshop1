@@ -19,28 +19,13 @@ const app = express();
 app.use(express.json());
 
 // CORS налаштування для продакшену
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://forest-workshop1.vercel.app',
-  'https://forest-workshop1-f3rj527tg-perfectqqs-projects.vercel.app',
-  'https://forest-workshop1-git-master-perfectqqs-projects.vercel.app',
-  process.env.FRONTEND_URL
-].filter(Boolean);
-
 app.use(cors({
-  origin: function(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.log('Blocked by CORS:', origin);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: '*', // Дозволяємо всі домени
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
-console.log('CORS middleware applied with allowed origins:', allowedOrigins);
+console.log('CORS middleware applied with wildcard origin');
 
 // Підключення до MongoDB
 const MONGODB_URI = process.env.MONGODB_URI;
