@@ -63,10 +63,17 @@ const AdminOrdersPage = () => {
   const filteredOrders = orders.filter(order => {
     const search = searchTerm.toLowerCase();
     return (
-      order.orderNumber?.toLowerCase().includes(search) ||
-      order.user?.name?.toLowerCase().includes(search) ||
-      order.status?.toLowerCase().includes(search) ||
-      order.contactPhone?.includes(search)
+      (order.orderNumber?.toLowerCase().includes(search)) ||
+      (order.firstName?.toLowerCase().includes(search)) ||
+      (order.lastName?.toLowerCase().includes(search)) ||
+      (order.email?.toLowerCase().includes(search)) ||
+      (order.phone?.includes(search)) ||
+      (order.city?.toLowerCase().includes(search)) ||
+      (order.novaPoshtaNumber?.includes(search)) ||
+      (order.status?.toLowerCase().includes(search)) ||
+      (order.items?.some(item => 
+        item.product?.name?.toLowerCase().includes(search)
+      ))
     );
   });
 
