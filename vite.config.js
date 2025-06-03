@@ -20,6 +20,6 @@ export default defineConfig({
   },
   esbuild: {
     loader: 'jsx',
-    include: /src\/.*\.js$/, // Дозволити JSX в .js
+    include: /src\/.*\.(js|jsx)$/,
   }
 })
