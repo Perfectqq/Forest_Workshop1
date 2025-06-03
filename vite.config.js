@@ -18,8 +18,7 @@ export default defineConfig({
     sourcemap: false,
     minify: true,
   },
-  esbuild: {
-    loader: 'jsx',
-    include: /src\/.*\.(js|jsx)$/,
+  resolve: {
+    extensions: ['.js', '.jsx', '.json']
   }
 })
