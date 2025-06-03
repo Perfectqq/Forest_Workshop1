@@ -59,24 +59,24 @@ function App() {
         <div className="navbar-links">
           {userRole === 'admin' ? (
             <>
-              <NavLink to="/admin/AdminProductList">Товари</NavLink>
-              <NavLink to="/admin/AdminUserPage">Користувачі</NavLink>
-              <NavLink to="/admin/AdminOrdersPage">Замовлення</NavLink>
+              <NavLink to="/admin/AdminProductList" className="nav-link">Товари</NavLink>
+              <NavLink to="/admin/AdminUserPage" className="nav-link">Користувачі</NavLink>
+              <NavLink to="/admin/AdminOrdersPage" className="nav-link">Замовлення</NavLink>
               <button className="logout-btn" onClick={handleLogout}>
                 <i className="fas fa-sign-out-alt"></i> Вихід
               </button>
             </>
           ) : (
             <>
-              <NavLink to="/products">Товари</NavLink>
+              <NavLink to="/products" className="nav-link">Товари</NavLink>
               {userRole ? (
                 <button className="logout-btn" onClick={handleLogout}>
                   <i className="fas fa-sign-out-alt"></i> Вихід
                 </button>
               ) : (
                 <>
-                  <NavLink to="/login">Увійти</NavLink>
-                  <NavLink to="/register">Реєстрація</NavLink>
+                  <NavLink to="/login" className="nav-link">Увійти</NavLink>
+                  <NavLink to="/register" className="nav-link">Реєстрація</NavLink>
                 </>
               )}
             </>
@@ -131,11 +131,5 @@ function App() {
 const ProtectedRoute = ({ children, role }) => {
   return role === 'admin' ? children : <Navigate to="/login" />;
 };
-
-const NavLink = ({ to, children }) => (
-  <Link to={to} className="nav-link">
-    {children}
-  </Link>
-);
 
 export default App;
