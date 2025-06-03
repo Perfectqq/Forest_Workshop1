@@ -103,7 +103,7 @@ body {
   }
 
   &.active {
-    background-color: rgba($white, 0.1);
+    background-color: transparent;
     color: $white;
   }
 }
