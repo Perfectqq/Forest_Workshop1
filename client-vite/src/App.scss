@@ -91,20 +91,19 @@ body {
 .nav-link {
   color: $white;
   text-decoration: none;
-  font-weight: 500;
-  font-size: 1.1rem;
+  font-weight: 600;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   @include transition;
 
   &:hover {
     background-color: rgba($white, 0.1);
-    color: $white;
+    color: $secondary-color;
   }
 
   &.active {
-    background-color: transparent;
-    color: $white;
+    background-color: $secondary-color;
+    color: $primary-color;
   }
 }
 
